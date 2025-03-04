@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Личный кабинет</title>
+</head>
+<body>
+    <h1>Добро пожаловать, <span id="username">...</span>!</h1>
+    <p>Ваш ID: <span id="user_id">...</span></p>
+    <p>Полное имя: <span id="full_name">...</span></p>
+
+    <script>
+        async function loadUser() {
+            const userId = 123;  // Здесь нужно динамически подставить ID текущего пользователя
+            const response = await fetch(`http://127.0.0.1:5000/user/${userId}`);
+            const user = await response.json();
+
+            if (user.error) {
+                document.body.innerHTML = `<h1>Ошибка: ${user.error}</h1>`;
+            } else {
+                document.getElementById("username").textContent = user.username;
+                document.getElementById("user_id").textContent = user.id;
+                document.getElementById("full_name").textContent = user.full_name;
+            }
+        }
+
+        loadUser();
+    </script>
+</body>
+</html>
